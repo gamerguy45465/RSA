@@ -1,5 +1,5 @@
-import permutation_generator as pm
-import math as m
+import permutation as pm
+import math as md
 '''
 Consider the problem of several students planning a holiday gift exchange. Everyone will give one gift to a randomly 
 selected student in the group. In great anticipation, all participating students place their names in a hat, then shake it up. 

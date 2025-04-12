@@ -43,10 +43,12 @@ class RSA:
 
 
     def Encrypt(self, input_text_file, out_text_file):
+        return "Hello World"
 
 
 
     def Decrypt(self, input_text_file, output_text_file):
+        return "Hello World"
 
 
 
