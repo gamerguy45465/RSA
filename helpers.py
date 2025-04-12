@@ -1,5 +1,6 @@
-def alphabetToNumber(message):
-    alphabet = "abcdefghijklmnopqrstuvwxyz"
+import math
+
+def alphabetToNumber(message, alphabet):
     Number = []
 
     for letter in message:
@@ -44,14 +45,14 @@ def SumofArray(arr):
 
 
 def RSA_Base26(the_string):
-    the_new_list = alphabetToNumber(the_string)
+    the_new_list = alphabetToNumber(the_string, "abcdefghijklmnopqrstuvwxyz")
     the_newer_list = fromBase(26, the_new_list)
     the_newest_sum = SumofArray(the_newer_list)
 
     return the_newest_sum
 
 
-def EuclideanAlgorithm(number1, number2):
+'''def EuclideanAlgorithm(number1, number2):
     bigger = 0
     smaller = 0
     if(number1 > number2):
@@ -69,9 +70,65 @@ def EuclideanAlgorithm(number1, number2):
             r = bigger % smaller
             bigger = q
             smaller = r
+            isTrue = bigger > smaller
 
 
-    return bigger
+    return bigger'''
+
+
+def EuclideanAlgorithm(number1, number2):
+    equations = []
+    dividends = []
+    divisors = []
+    quotients = []
+    remainders = []
+
+    quotient = math.inf
+    remainder = math.inf
+
+    while(remainder != 1 and remainder != 0):
+
+        quotient = number2 // number1
+        remainder = number2 % number1
+        equation = str(number2) + " = " + str(number1) + " * " + str(quotient) + " + " + str(remainder)
+        dividends.append(number2)
+        divisors.append(number1)
+        quotients.append(quotient)
+        remainders.append(remainder)
+        equations.append(equation)
+        number2 = number1
+
+        number1 = remainder
+
+
+    return remainders[len(remainders) - 1]
+
+
+
+
+
+
+
+def inverse(a, n):
+    t = 0
+    r = n 
+    newt = 1
+    newr = a
+    
+    while newr != 0:
+        quotient = r // newr
+        (t, newt) = (newt, t - quotient * newt)
+        (r, newr) = (newr, r - quotient * newr)
+        
+    
+    if r > 1:
+        return "a i not invertible"
+    
+    if t < 0:
+        t = t + n
+        
+    return t
+
 
 
 
