@@ -12,13 +12,25 @@ def alphabetToNumber(message, alphabet):
     return Number
 
 
+def numberToAlphabet(number, alphabet):
+    Message = ""
+
+    for individual in number:
+        for i in range(len(alphabet)):
+            if individual == alphabet[i]:
+                Message += str(alphabet[i])
+
+
+    return Message
+
+
 
 def toBase(b, number): #Assuming that the message was already converted to its index equivalent
-    result = ""
+    result = []
 
     for i in range(len(number)):
         base_number = int(number[i]) % b
-        result += str(base_number)
+        result.append(base_number)
 
 
     return result

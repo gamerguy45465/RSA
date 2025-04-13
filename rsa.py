@@ -7,6 +7,7 @@ import helpers
 class RSA:
     def __init__(self, keys):
         self.keys = keys
+        self.r = 0
 
     def GenerateKeys(self, text_string1, text_string2):
         p = helpers.RSA_Base26(text_string1)
@@ -35,6 +36,8 @@ class RSA:
         n = p * q
 
         r = (p - 1) * (q - 1)
+
+        self.r = r
 
         e = 10**398 + 1
 
@@ -65,7 +68,7 @@ class RSA:
 
 
 
-    def FileHandler(self, input_text_file, out_text_file):
+    def FileHandler(self, input_text_file, out_text_file, encrypt=True):
         InputFile = open(input_text_file, "rb")
         OutputFile = open(out_text_file, "w")
 
@@ -77,9 +80,16 @@ class RSA:
 
         new_plain_text = helpers.alphabetToNumber(PlainText, alphabet)
 
-        new_plain_text_list = helpers.fromBase(70, new_plain_text)
+        new_plain_text_list = [] # Just so I don't get any error messages
 
-        M = helpers.SumofArray(new_plain_text_list)
+        if(encrypt == True):
+
+            new_plain_text_list = helpers.fromBase(70, new_plain_text)
+            M = helpers.SumofArray(new_plain_text_list)
+
+        else:
+            new_plain_text_list = helpers.toBase(70, new_plain_text)
+            M = helpers.SumofArray(new_plain_text_list)
 
         # Public: n e
         # Private: n d
@@ -118,6 +128,8 @@ class RSA:
         OutputFile.truncate()
         OutputFile.write(str(C) + "\n")
 
+        OutputFile.close()
+
         return C
 
 
@@ -125,10 +137,26 @@ class RSA:
 
 
     def Decrypt(self, input_text_file, output_text_file):
-        (M, n, e, d, OutputFile) = self.FileHandler(input_text_file, output_text_file)
+        (M, n, e, d, OutputFile) = self.FileHandler(input_text_file, output_text_file, False)
 
 
-        return "Hello World"
+        #d 937
+        #e = 13
+
+
+        C = pow(M, int(d), int(self.r))
+
+        alphabet = ".,?! \t\n\rabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+        new_C = helpers.numberToAlphabet(str(C), alphabet)
+
+        OutputFile.truncate()
+        OutputFile.write(str(new_C) + "\n")
+
+        return C
+
+
+
 
 
 
