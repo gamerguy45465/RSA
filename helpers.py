@@ -1,19 +1,73 @@
 import math
+import sys
 
-def alphabetToNumber(message, alphabet):
-    Number = []
+def alphabetToNumber(alphabet, message):
+    Number = 0
 
     for letter in message:
-        for i in range(len(alphabet)):
-            if letter == alphabet[i]:
-                Number.append(i)
+        pos = alphabet.find(letter)
+
+        if(pos != -1):
+            Number = Number * len(alphabet) + pos
+
 
 
     return Number
 
 
-def numberToAlphabet(number, alphabet):
-    Message = ""
+def alphabettest(alphabet, message):
+    C = ""
+    print("Message: ", message)
+    for i in range(len(message) - 2):
+        print("I: ", i)
+        print("Messages[i]: ", message[i])
+        k = str(message[i])
+        print("K", k)
+        j = int(k)
+        C += alphabet[j]
+
+    print(C)
+
+
+def justaNumber(alphabet, number):
+    S = ""
+    text = numberToAlphabet(alphabet, int(number))
+
+    for i in range(len(text)):
+        pos = alphabet.find(text[i])
+        S += str(pos)
+
+
+    return S
+
+
+def justaString(alphabet, number):
+    S = ""
+    string_number = str(number)
+
+
+    print("String_Number: ", string_number)
+
+
+
+    for i in range(0, len(string_number) - 1, 2):
+        letter = string_number[i] + string_number[i + 1]
+        if(int(letter) < 70):
+            S += alphabet[int(letter)]
+
+
+
+
+    return S
+
+
+
+
+
+
+def numberToAlphabet(alphabet, number):
+
+    '''Message = ""
 
     for individual in number:
         for i in range(len(alphabet)):
@@ -21,25 +75,49 @@ def numberToAlphabet(number, alphabet):
                 Message += str(alphabet[i])
 
 
-    return Message
+    return Message '''
+
+    l = len(alphabet)
+    s = alphabet[number % l]
+    value = number // l
+    while value > 0:
+        s += alphabet[value % l]
+        value = value // l
+
+
+    s = s[len(s)-1::-1]
+    return s
+
 
 
 
 def toBase(b, number): #Assuming that the message was already converted to its index equivalent
-    result = []
+    '''result = ""
 
     for i in range(len(number)):
         base_number = int(number[i]) % b
-        result.append(base_number)
+        result += str(base_number)
 
+
+    return result'''
+
+    result = ""
+
+    q = int(number)
+    k = 0
+
+    while q != 0:
+        result += str(q % b)
+        q = q // b
+        k = k + 1
 
     return result
 
 
 def fromBase(b, number):
-    result = []
+    result = ""
     for i in range(len(number) - 1, 0, -1):
-        result.append(int(number[i])**i)
+        result += str(b * int(number[i])**i)
 
     return result
 
@@ -55,13 +133,21 @@ def SumofArray(arr):
 
     return the_sum
 
+def textToNumber(text):
+    number = ""
+    alphabet = ".,?! \t\n\rabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    for letter in text:
+        pos = alphabet.find(letter)
+        number += str(pos)
+
+    return int(number)
+
+
 
 def RSA_Base26(the_string):
-    the_new_list = alphabetToNumber(the_string, "abcdefghijklmnopqrstuvwxyz")
-    the_newer_list = fromBase(26, the_new_list)
-    the_newest_sum = SumofArray(the_newer_list)
+    the_new_list = textToNumber(the_string)
 
-    return the_newest_sum
+    return the_new_list
 
 
 '''def EuclideanAlgorithm(number1, number2):
@@ -112,8 +198,17 @@ def EuclideanAlgorithm(number1, number2):
 
         number1 = remainder
 
+    #print(remainders)
+    #print(equations)
 
-    return remainders[len(remainders) - 1]
+
+    if(remainders[len(remainders) - 1] == 1):
+        return remainders[len(remainders) - 1]
+
+
+    else:
+
+        return remainders[len(remainders) - 2]
 
 
 
@@ -140,6 +235,10 @@ def inverse(a, n):
         t = t + n
         
     return t
+
+
+
+print(toBase(70, "81"))
 
 
 
